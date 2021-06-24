@@ -80,7 +80,7 @@ public class LoginController {
             if(predefinedUser.getFirstName().equals(username) &&
                 "password".equals(password)) {
                 // UserToken
-                String userToken = generateToken(username, "Authentication");
+                String userToken = generateToken(username, "Authorization");
                 byte[] response = userToken.getBytes(StandardCharsets.UTF_8);
                 httpExchange.sendResponseHeaders(200, response.length);
                 httpExchange.getResponseBody()
