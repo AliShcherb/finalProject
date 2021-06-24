@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<ul>
+    <li>id = ${data.id}</li>
+    <li>firstName = ${data.firstName}</li>
+    <li>lastName = ${data.lastName}</li>
+    <li>inst = ${data.inst}</li>
+</ul>
+</body>
+</html>
