@@ -2,13 +2,11 @@ package ua.edu.ukma.fido.models;
 
 import lombok.Data;
 
-import java.sql.Time;
-import java.util.Date;
-
 @Data
 public class User {
-    Integer id = 0;
-    String firstName;
-    String lastName;
-    String inst;
+    // generate somewhere in database
+    private final Integer id = 0;
+    private final String firstName;
+    private final String lastName;
+    private final String inst;
 }

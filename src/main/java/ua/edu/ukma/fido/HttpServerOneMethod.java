@@ -1,6 +1,7 @@
 package ua.edu.ukma.fido;
 
 import com.sun.net.httpserver.HttpContext;
+import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import ua.edu.ukma.fido.controllers.ApiGoodController;
 import ua.edu.ukma.fido.controllers.LoginController;
@@ -19,6 +20,7 @@ public class HttpServerOneMethod {
     public static void main(String[] args) {
         try {
             ApiGoodController.setView(VIEW);
+            LoginController.setView(VIEW);
 
             HttpServer server = HttpServer.create();
 

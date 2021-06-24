@@ -25,7 +25,8 @@ public class HtmlView implements View {
             Object data = response.getData();
 
             Map root = new HashMap();
-            root.put("data", data);
+            // boolshit!!!
+            root.put("data", data == null ? new Object() : data);
 
             String templateName = response.getTemplate();
 

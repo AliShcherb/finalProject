@@ -1,22 +1,23 @@
 package ua.edu.ukma.fido.controllers;
 
+import java.security.Key;
+import java.time.Instant;
+import java.util.Base64;
+import java.util.Date;
+
+import javax.crypto.spec.SecretKeySpec;
+
 import com.sun.net.httpserver.HttpExchange;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import ua.edu.ukma.fido.dto.Response;
 import ua.edu.ukma.fido.models.User;
 import ua.edu.ukma.fido.utils.AuthControlUtil;
 import ua.edu.ukma.fido.utils.KeyUtil;
 import ua.edu.ukma.fido.views.View;
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-import java.security.Key;
-import java.time.Instant;
-import java.util.Base64;
-import java.util.Date;
 
 public class ApiGoodController {
     private static View view;
@@ -64,20 +65,7 @@ public class ApiGoodController {
             return;
         }
 
-        String objectId = "";
-        String path = httpExchange.getRequestURI().getPath();
-        String subPath = path.substring(PATH.length());
-        if (!subPath.equals("")) {
-            objectId = subPath;
-        }
-
-        User user = new User();
-        if (!objectId.equals(""))
-            user.setId(Integer.valueOf(objectId));
-        user.setFirstName("Trokhym");
-        user.setLastName("Babych");
-        user.setInst("trosha_b");
-
+        User user = new User("Trokhym", "Babych", "trosha_b");
         Response response = new Response();
         response.setTemplate("view_user");
         response.setStatusCode(200);
