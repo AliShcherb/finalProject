@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="mainworkspace.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div id="containerBody">
+        <div class="header">
+            <div class="buttons">
+                <button type="button" id="btn1">Склад</button>
+                <button type="button" onclick="addGroupForm()">Додати групу</button>
+            </div>
+        </div>
+        <div id="containerContent">
+            <div class="groupPanel" id="app" v-scroll="onScroll">
+
+                <div class="cardGroup" id="generalGroup">
+                    <h3>Усі товари</h3>
+                </div>
+                <!--<div class="cardGroup">
+                    <h3>GroupName</h3>
+                    <p>groupDescription</p>
+                </div>
+                <div class="cardGroup">
+                    <h3>GroupName</h3>
+                    <p>groupDescription Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem at magnam atque?
+                        Veniam at ullam cumque aut ex eius tenetur laudantium! Corrupti odio doloremque nobis quidem est
+                        repudiandae quae. Distinctio!</p>
+                </div>
+                <div class="cardGroup">
+                    <h3>GroupName</h3>
+                    <p>groupDescription</p>
+                </div>
+            -->
+            </div>
+            <div class="groupContent">
+                <div id="groupDescription">
+                    <h3>GroupName</h3>
+                    <div class="descrButtons">
+                        <button class="edit" onclick="addItemForm()"><i class="fa fa-plus"></i></button>
+                        <button class="edit"><i class="fa fa-edit"></i></button>
+                        <button class="delete"><i class="fa fa-trash"></i></button>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium dolorem
+                        tenetur magni ipsam eos sunt, aspernatur eum, minima atque dicta id magnam delectus, cum rem. Ea
+                        eveniet sed odit Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae voluptate
+                        nihil quisquam excepturi ratione ab vero consequatur! Sit hic aut voluptatum debitis voluptates,
+                        voluptas cum quae, aspernatur eius adipisci labore!Lorem</p>
+                </div>
+                <div class="itemPanel">
+                    <!--<div class="cardItem">
+                        <div class="card__content">
+                            <h3>Назва товару</h3>
+                            <p>Кількість</p>
+                            <p>Опис товару</p>
+                            <p>Виробник</p>
+                            <p>Ціна:</p>
+                        </div>
+                    </div>
+                    <div class="cardItem">
+                        <div class="card__content">
+                            <h3>{{card.title}}</h3>
+                            <p>{{card.description}}</p>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="adding addItem">
+        <button class="closeForm" onclick="closeItemForm()"><i class="fa fa-close"></i></button>
+        <label for="itName"><b>Назва товару</b></label>
+        <input type="text" placeholder="Введіть назву товару" id="itName" name="itName" required>
+
+        <label for="itQuantity"><b>Кількість</b></label>
+        <input type="text" placeholder="Введіть початкову кількість товару" id="itQuantity" name="itQuantity" required>
+
+        <label for="itDescription"><b>Опис товару</b></label>
+        <input type="text" placeholder="Додайте короткий опис товару" id="itDescription" name="itDescription" required>
+
+        <label for="itDistributor"><b>Виробник</b></label>
+        <input type="text" placeholder="Вкажіть виробника" id="itDistributor" name="itDistributor" required>
+
+        <label for="itPrice"><b>Ціна за одиницю</b></label>
+        <input type="text" placeholder="Вкажіть ціну одиниці товару у гривнях" id="itPrice" name="itPrice" required>
+
+        <button class="dodaty" type="submit" onclick="addItem()">Додати</button>
+    </div>
+    <div class="adding addGroup">
+        <button class="closeForm" onclick="closeGroupForm()"><i class="fa fa-close"></i></button>
+        <label for="grName"><b>Назва групи</b></label>
+        <input type="text" placeholder="Введіть назву групи товарів" name="grName" required>
+
+        <label for="grDescription"><b>Опис групи</b></label>
+        <input type="text" placeholder="Додайте короткий опис групи товарів" name="grDescription" required>
+
+        <button class="dodaty" type="submit" onclick="addGroup()">Додати</button>
+
+    </div>
+
+    <script src="mainworkspace.js"></script>
+</body>
+
+</html>

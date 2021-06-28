@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.crypto.spec.SecretKeySpec;
 
+import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 
 import io.jsonwebtoken.Claims;
@@ -30,7 +31,7 @@ public class LoginController {
     private static View view;
     public static String PATH = "/login";
 
-    private static User predefinedUser = new User("vadym", "akymov", "I'm too old for this shit!");
+    private static User predefinedUser = new User("Alisher", "Morgenshtern", "alisherb");
 
     public static void setView(View newView) {
         view = newView;
@@ -115,17 +116,12 @@ public class LoginController {
     private static Map<String, String> getWwwFormUrlencodedBody(HttpExchange exchange) throws IOException {
         HashMap<String, String> map = new HashMap<>();
         String body = getStringFromInputStream(exchange.getRequestBody());
-
         for (String parameter : body.split("&")) {
             String[] keyValue = parameter.split("=");
-
             if (keyValue.length != 2)
                 return null;
-
             map.put(keyValue[0], keyValue[1]);
-
         }
-
         return map;
     }
 

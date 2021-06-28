@@ -128,6 +128,27 @@ public class Table {
         return product;
     }
 
+    public static Product selectById(Integer id) {
+        Product product = null;
+        String sqlQuery = "SELECT * FROM " + Main.tableName + " WHERE id= ?";
+
+        try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet != null && resultSet.next()) {
+                product = new Product(
+                        resultSet.getString("name"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("amount")
+                );
+                resultSet.close();
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        return product;
+    }
     public static ResultSet selectWhereAmountBiggerThan(int amount) {
         String sqlQuery = "SELECT * FROM " + Main.tableName + " WHERE amount > ?";
 

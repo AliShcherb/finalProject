@@ -1,10 +1,10 @@
 package ua.edu.ukma.fido;
 
 import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import ua.edu.ukma.fido.controllers.ApiGoodController;
-import ua.edu.ukma.fido.controllers.LoginController;
+import ua.edu.ukma.fido.controllers.*;
+import ua.edu.ukma.fido.db.DB;
+import ua.edu.ukma.fido.db.Table;
 import ua.edu.ukma.fido.views.HtmlView;
 import ua.edu.ukma.fido.views.View;
 
@@ -21,7 +21,9 @@ public class HttpServerOneMethod {
         try {
             ApiGoodController.setView(VIEW);
             LoginController.setView(VIEW);
-
+            ApiGoodId.setView(VIEW);
+           GetAllProducts.setView(VIEW);
+            ApiGoodName.setView(VIEW);
             HttpServer server = HttpServer.create();
 
             server.bind(new InetSocketAddress(HTTP_SERVER_PORT), 0);
@@ -31,6 +33,26 @@ public class HttpServerOneMethod {
 
             HttpContext context2 = server.createContext(LoginController.PATH); // http://localhost:8888/hello
             context2.setHandler(LoginController::serve);
+
+            HttpContext context3 = server.createContext(ApiGoodId.PATH); // http://localhost:8888/hello
+            context3.setHandler(ApiGoodId::serve);
+
+            HttpContext context4 = server.createContext(GetAllProducts.PATH); // http://localhost:8888/hello
+            context4.setHandler(GetAllProducts::serve);
+
+            HttpContext context5 = server.createContext(ApiGoodName.PATH); // http://localhost:8888/hello
+            context5.setHandler(ApiGoodName::serve);
+
+            DB.connect();
+            Table.create();
+            Table.cleanDatabase();
+
+            Table.insert(1, "MOLOKO",29.19,5);
+            Table.insert(2, "GRECHKA",40,100);//❤
+
+            Integer idThree = Table.insert("MORKVA",10,20);
+            Integer idFour = Table.insert("KOVBASKA",150,1);
+            Integer idFive = Table.insert("POMIDORKA",11,220);
 
             server.start();
         } catch (IOException e) {
