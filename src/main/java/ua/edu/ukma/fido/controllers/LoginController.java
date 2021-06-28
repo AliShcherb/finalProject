@@ -67,7 +67,6 @@ public class LoginController {
     }
 
     public static void serve(HttpExchange httpExchange) throws IOException {
-        String token = generateToken("1", "Authorization");
 
 //        if (!validateToken(httpExchange)) {
 //            AuthControlUtil.sendUnauthorized(httpExchange);
@@ -82,12 +81,17 @@ public class LoginController {
                 "password".equals(password)) {
                 // UserToken
                 String userToken = generateToken(username, "Authorization");
-                byte[] response = userToken.getBytes(StandardCharsets.UTF_8);
-                httpExchange.sendResponseHeaders(200, response.length);
-                httpExchange.getResponseBody()
+              /*  byte[] response = userToken.getBytes(StandardCharsets.UTF_8);
+                httpExchange.sendResponseHeaders(200, response.length);*/
+             /*   httpExchange.getResponseBody()
                         .write(response);
                 httpExchange.getResponseBody()
-                        .flush();
+                        .flush();*/
+                Response response = new Response();
+        response.setTemplate("api/good");
+           response.setStatusCode(200);
+         response.setHttpExchange(httpExchange);
+           view.view(response);
             } else {
                 byte[] response = "Dude, you shall not pass!".getBytes(StandardCharsets.UTF_8);
                 httpExchange.sendResponseHeaders(401, response.length);

@@ -60,10 +60,10 @@ public class ApiGoodController {
         String token = generateToken("1", "2");
         String requestMethod = httpExchange.getRequestMethod();
 
-        if (!validateToken(httpExchange)) {
+     /*   if (!validateToken(httpExchange)) {
             AuthControlUtil.sendUnauthorized(httpExchange);
             return;
-        }
+        }*/
 
         User user = new User("Trokhym", "Babych", "trosha_b");
         Response response = new Response();
