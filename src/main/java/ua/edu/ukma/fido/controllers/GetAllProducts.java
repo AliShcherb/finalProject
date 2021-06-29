@@ -10,10 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -27,6 +26,7 @@ import ua.edu.ukma.fido.db.Product;
 import ua.edu.ukma.fido.db.Table;
 import ua.edu.ukma.fido.dto.Response;
 import ua.edu.ukma.fido.models.User;
+import ua.edu.ukma.fido.token.TokenHolder;
 import ua.edu.ukma.fido.utils.AuthControlUtil;
 import ua.edu.ukma.fido.utils.KeyUtil;
 import ua.edu.ukma.fido.views.View;
@@ -39,18 +39,7 @@ public class GetAllProducts {
             view = newView;
         }
 
-        public static boolean validateToken(HttpExchange httpExchange) {
-            String jwt = httpExchange.getRequestHeaders().getFirst("Authorization").substring("Bearer ".length());
 
-            Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(KeyUtil.getSecret()), SignatureAlgorithm.HS256.getJcaName());
-            Claims claims = Jwts.parserBuilder().setSigningKey(hmacKey).build().parseClaimsJws(jwt).getBody();
-
-            Instant instant = claims.getExpiration().toInstant() ;
-            long expirationMillis = instant.toEpochMilli() ;
-            long nowMillis = System.currentTimeMillis();
-
-            return expirationMillis > nowMillis && claims.getIssuer().equals(KeyUtil.getIssuer()) && claims.getSubject().equals("Authorization");
-        }
 
         public static String generateToken(String id, String subject) {
             long nowMillis = System.currentTimeMillis();
@@ -70,27 +59,38 @@ public class GetAllProducts {
 
         public static void serve(HttpExchange httpExchange) throws IOException {
 
-            if("POST".equals(httpExchange.getRequestMethod())) {
-                ResultSet p =  Table.selectAll();
-                printResultSet("All: ", p);
-               /* byte[] response = str.getBytes(StandardCharsets.UTF_8);
-                httpExchange.sendResponseHeaders(200, response.length);
-                httpExchange.getResponseBody()
-                        .write(response);
-                httpExchange.getResponseBody()
-                        .flush();*/
 
-            }
-       if (!validateToken(httpExchange)) {
+       if (!TokenHolder.validateToken(TokenHolder.getToken())) {
           AuthControlUtil.sendUnauthorized(httpExchange);
            return;
         }
 
-            Response response = new Response();
+            if("GET".equals(httpExchange.getRequestMethod())) {
+               List<Product> productList =  Table.selectAll();
+               List <String> strNames = productList.stream().map(new Function<Product, String>() {
+                   @Override
+                   public String apply(Product product) {
+                       return product.getProductName();
+                   }
+               }).collect(Collectors.toList());
+
+              // printResultSet("All: ", p);
+                String str= String.join(",",strNames);
+                byte[] response = str.getBytes(StandardCharsets.UTF_8);
+                httpExchange.sendResponseHeaders(200, response.length);
+                httpExchange.getResponseBody()
+                        .write(response);
+                httpExchange.getResponseBody()
+                        .flush();
+
+            }
+
+
+          /*  Response response = new Response();
             response.setTemplate("allProducts");
             response.setStatusCode(200);
             response.setHttpExchange(httpExchange);
-            view.view(response);
+            view.view(response);*/
         }
 
         private static Map<String, String> getWwwFormUrlencodedBody(HttpExchange exchange) throws IOException {

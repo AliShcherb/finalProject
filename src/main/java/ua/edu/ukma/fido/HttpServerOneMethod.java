@@ -24,6 +24,8 @@ public class HttpServerOneMethod {
             ApiGoodId.setView(VIEW);
            GetAllProducts.setView(VIEW);
             ApiGoodName.setView(VIEW);
+            InsertProdController.setView(VIEW);
+
             HttpServer server = HttpServer.create();
 
             server.bind(new InetSocketAddress(HTTP_SERVER_PORT), 0);
@@ -42,6 +44,9 @@ public class HttpServerOneMethod {
 
             HttpContext context5 = server.createContext(ApiGoodName.PATH); // http://localhost:8888/hello
             context5.setHandler(ApiGoodName::serve);
+
+            HttpContext context6 = server.createContext(InsertProdController.PATH); // http://localhost:8888/hello
+            context6.setHandler((InsertProdController::serve));
 
             DB.connect();
             Table.create();

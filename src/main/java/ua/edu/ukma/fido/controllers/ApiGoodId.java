@@ -37,18 +37,6 @@ public class ApiGoodId {
         view = newView;
     }
 
-    public static boolean validateToken(HttpExchange httpExchange) {
-        String jwt = httpExchange.getRequestHeaders().getFirst("Authorization").substring("Bearer ".length());
-
-        Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(KeyUtil.getSecret()), SignatureAlgorithm.HS256.getJcaName());
-        Claims claims = Jwts.parserBuilder().setSigningKey(hmacKey).build().parseClaimsJws(jwt).getBody();
-
-        Instant instant = claims.getExpiration().toInstant() ;
-        long expirationMillis = instant.toEpochMilli() ;
-        long nowMillis = System.currentTimeMillis();
-
-        return expirationMillis > nowMillis && claims.getIssuer().equals(KeyUtil.getIssuer()) && claims.getSubject().equals("Authorization");
-    }
 
     public static String generateToken(String id, String subject) {
         long nowMillis = System.currentTimeMillis();
@@ -81,10 +69,10 @@ public class ApiGoodId {
                     .flush();
 
         }
-       if (!validateToken(httpExchange)) {
+     /*  if (!validateToken(httpExchange)) {
            AuthControlUtil.sendUnauthorized(httpExchange);
            return;
-     }
+     }*/
 
         Response response = new Response();
         response.setTemplate("findproduct");

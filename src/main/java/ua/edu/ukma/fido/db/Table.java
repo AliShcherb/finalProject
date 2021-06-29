@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Table {
     public static void create() {
@@ -20,7 +22,7 @@ public class Table {
         }
     }
 
-    public static Integer insert(String name,double price, int amount) {
+    public static Integer insert(String name, double price, int amount) {
         String sqlQuery = "INSERT INTO " + Main.tableName + " (name, price,amount) VALUES (?,?,?)";
 
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
@@ -33,7 +35,7 @@ public class Table {
             if (resultSet.next()) {
                 Integer id = resultSet.getInt(1);
 
-                System.out.println("Inserted: id(" + id + ")  name: " + name+ "  price: " + price + "  amount: " + amount+"\n");
+                System.out.println("Inserted: id(" + id + ")  name: " + name + "  price: " + price + "  amount: " + amount + "\n");
 
                 return id;
             } else {
@@ -56,7 +58,7 @@ public class Table {
 
             preparedStatement.executeUpdate();
 
-            System.out.println("Inserted: id(" + id + ")  name: " + name+ "  price: " + price + "  amount: " + amount+"\n");
+            System.out.println("Inserted: id(" + id + ")  name: " + name + "  price: " + price + "  amount: " + amount + "\n");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -71,7 +73,7 @@ public class Table {
 
             preparedStatement.executeUpdate();
 
-            System.out.println("Updated: id(" + id + ")  (new)name: " + name+"\n");
+            System.out.println("Updated: id(" + id + ")  (new)name: " + name + "\n");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -87,7 +89,7 @@ public class Table {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
-            System.out.println("Updated: id(" + id + ")  (new)price: " + price+"\n");
+            System.out.println("Updated: id(" + id + ")  (new)price: " + price + "\n");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -100,7 +102,7 @@ public class Table {
             preparedStatement.setInt(1, amount);
             preparedStatement.setString(2, productName);
             preparedStatement.executeUpdate();
-            System.out.println("Updated: product(" + productName + ")  (new)amount: " + amount+"\n");
+            System.out.println("Updated: product(" + productName + ")  (new)amount: " + amount + "\n");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -113,7 +115,7 @@ public class Table {
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery)) {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet != null && resultSet.next()) {
+            if (resultSet != null && resultSet.next()) {
                 product = new Product(
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
@@ -135,7 +137,7 @@ public class Table {
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet != null && resultSet.next()) {
+            if (resultSet != null && resultSet.next()) {
                 product = new Product(
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
@@ -149,6 +151,7 @@ public class Table {
 
         return product;
     }
+
     public static ResultSet selectWhereAmountBiggerThan(int amount) {
         String sqlQuery = "SELECT * FROM " + Main.tableName + " WHERE amount > ?";
 
@@ -210,14 +213,23 @@ public class Table {
         return null;
     }
 
-    public static ResultSet selectAll() {
+    public static List<Product> selectAll() {
+        List<Product> productList = new ArrayList<>();
         String sqlQuery = "SELECT * FROM " + Main.tableName;
         try (Statement statement = DB.connection.createStatement();) {
-            return statement.executeQuery(sqlQuery);
+            ResultSet res = statement.executeQuery(sqlQuery);
+            while (res.next()) {
+                /*    String id =    res.getString("id" );*/
+                String name = res.getString("name");
+                Double price = res.getDouble("price");
+                Integer amount = res.getInt("amount");
+                Product product = new Product(name, price, amount);
+                productList.add(product);
+            }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        return null;
+        return productList;
     }
 
     public static void cleanDatabase() {

@@ -1,5 +1,18 @@
 package ua.edu.ukma.fido.controllers;
 
+import com.sun.net.httpserver.HttpExchange;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import ua.edu.ukma.fido.db.Product;
+import ua.edu.ukma.fido.db.Table;
+import ua.edu.ukma.fido.dto.Response;
+import ua.edu.ukma.fido.utils.AuthControlUtil;
+import ua.edu.ukma.fido.utils.KeyUtil;
+import ua.edu.ukma.fido.views.View;
+
+import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,27 +26,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.crypto.spec.SecretKeySpec;
-
-import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpExchange;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import ua.edu.ukma.fido.dto.Response;
-import ua.edu.ukma.fido.models.User;
-import ua.edu.ukma.fido.token.TokenHolder;
-import ua.edu.ukma.fido.utils.KeyUtil;
-import ua.edu.ukma.fido.views.View;
-
-public class LoginController {
+public class InsertProdController {
     private static View view;
-    public static String PATH = "/login";
-
-
-    private static User predefinedUser = new User("Alisher", "Morgenshtern", "alisherb");
+    public static String PATH = "/api/insert/product";
 
     public static void setView(View newView) {
         view = newView;
@@ -70,47 +65,26 @@ public class LoginController {
 
     public static void serve(HttpExchange httpExchange) throws IOException {
 
-//        if (!validateToken(httpExchange)) {
-//            AuthControlUtil.sendUnauthorized(httpExchange);
-//            return;
-//        }
-
         if("POST".equals(httpExchange.getRequestMethod())) {
             Map<String, String> requestParams = getWwwFormUrlencodedBody(httpExchange);
-            String username = requestParams.get("user_name");
-            String password = requestParams.get("user_password");
-            if(predefinedUser.getFirstName().equals(username) &&
-                "password".equals(password)) {
-                // UserToken
-                String userToken = generateToken(username, "Authorization");
-                TokenHolder.setToken(userToken);
-              /*  byte[] response = userToken.getBytes(StandardCharsets.UTF_8);
-                httpExchange.sendResponseHeaders(200, response.length);*/
-             /*   httpExchange.getResponseBody()
-                        .write(response);
-                httpExchange.getResponseBody()
-                        .flush();*/
-               redirect(httpExchange,"api/all");
-            } else {
-                byte[] response = "Dude, you shall not pass!".getBytes(StandardCharsets.UTF_8);
-                httpExchange.sendResponseHeaders(401, response.length);
-                httpExchange.getResponseBody()
-                        .write(response);
-                httpExchange.getResponseBody()
-                        .flush();
-            }
-            return;
+            String name = requestParams.get("name");
+            Product p =  Table.selectByName(name);
+            String str= "Name:"+p.getProductName()+ " Price:"+p.getPrice()+" Amount:"+p.getAmount();
+            byte[] response = str.getBytes(StandardCharsets.UTF_8);
+            httpExchange.sendResponseHeaders(200, response.length);
+            httpExchange.getResponseBody()
+                    .write(response);
+            httpExchange.getResponseBody()
+                    .flush();
 
-            /* Return any page you want HERE!!! */
-//            Response response = new Response();
-//            response.setTemplate("login");
-//            response.setStatusCode(200);
-//            response.setHttpExchange(httpExchange);
-//            view.view(response);
         }
+       /* if (!validateToken(httpExchange)) {
+            AuthControlUtil.sendUnauthorized(httpExchange);
+            return;
+        }*/
 
         Response response = new Response();
-        response.setTemplate("login");
+        response.setTemplate("insertProduct");
         response.setStatusCode(200);
         response.setHttpExchange(httpExchange);
         view.view(response);
@@ -119,12 +93,17 @@ public class LoginController {
     private static Map<String, String> getWwwFormUrlencodedBody(HttpExchange exchange) throws IOException {
         HashMap<String, String> map = new HashMap<>();
         String body = getStringFromInputStream(exchange.getRequestBody());
+
         for (String parameter : body.split("&")) {
             String[] keyValue = parameter.split("=");
+
             if (keyValue.length != 2)
                 return null;
+
             map.put(keyValue[0], keyValue[1]);
+
         }
+
         return map;
     }
 
@@ -136,11 +115,5 @@ public class LoginController {
             sb.append(line);
         }
         return sb.toString();
-    }
-
-    private static void redirect(HttpExchange exchange, String redirectUrl) throws IOException {
-        exchange.getResponseHeaders().set("Location", redirectUrl);
-        exchange.sendResponseHeaders(301, -1);
-        exchange.close();
     }
 }

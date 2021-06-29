@@ -2,6 +2,7 @@ package ua.edu.ukma.fido.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
     public final static String dbName="database.db";
@@ -19,8 +20,9 @@ public class Main {
         Integer idFour = Table.insert("KOVBASKA",150,1);
         Integer idFive = Table.insert("POMIDORKA",11,220);
 
-        ResultSet all = Table.selectAll();
-        printResultSet("All products", all);
+        List<Product> all = Table.selectAll();
+       // printResultSet("All products", all);
+        System.out.println("All products: "+all);
 
         Product productByName = Table.selectByName("MOLOKO");
         System.out.println("Find product with name \"MOLOKO\"");
@@ -43,14 +45,16 @@ public class Main {
         Table.delete(4);
 
         all = Table.selectAll();
-        printResultSet("All products", all);
+        System.out.println("All products: "+all);
+        //printResultSet("All products", all);
 
         Table.update_name(1, "NE_MOLOKO");
         Table.update_amount("NE_MOLOKO", 50);
         Table.update_price(3,13);
 
         all = Table.selectAll();
-        printResultSet("All products", all);
+        System.out.println("All products: "+all);
+      //  printResultSet("All products", all);
 
         Table.dropTable();
 

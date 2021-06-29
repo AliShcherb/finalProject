@@ -34,4 +34,9 @@ public class Product {
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString(){
+        return "Name: "+productName;
+    }
 }
