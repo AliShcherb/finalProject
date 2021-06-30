@@ -40,6 +40,26 @@ function loadTable() {
         xhttp.open("GET", url, false);
         xhttp.send();
     }
+
+    function sort(index, inputname) {
+            var phrase = document.getElementById(inputname);
+            var table = document.getElementById('info-table');
+            var regPhrase = new RegExp(phrase.value, 'i');
+            var flag = false;
+            for (var i = 1; i < table.rows.length; i++) {
+                flag = false;
+                for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                    flag = regPhrase.test(table.rows[i].cells[index].innerHTML);
+                    if (flag) break;
+                }
+                if (flag) {
+                    table.rows[i].style.display = "";
+                } else {
+                    table.rows[i].style.display = "none";
+                }
+
+            }
+        }
 </script>
 <style>th {
            height: 70px;
@@ -66,10 +86,11 @@ function loadTable() {
      <table class="table table-striped" id="info-table">
          <thead>
          <tr>
-             <th>hi</th>
-             <th>hello</th>
-             <th>meh</th>
-             <th>meh2</th>
+               <th>Product name <input type="text" id="name" onKeyUp="sort(0,'name')"></th>
+                     <th>Price<input type="text" id="price" onKeyUp="sort(1,'price')" ></th>
+                     <th>Amount <input type="number" id="amount" onKeyUp="sort(2,'amount')"></th>
+                    <th>Category<input type="text" id="category" onKeyUp="sort(3,'category')" ></th>
+
          </tr>
          </thead>
          <tbody>
