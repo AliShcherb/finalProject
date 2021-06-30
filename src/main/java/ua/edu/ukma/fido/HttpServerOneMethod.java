@@ -25,6 +25,7 @@ public class HttpServerOneMethod {
            GetAllProducts.setView(VIEW);
             ApiGoodName.setView(VIEW);
             InsertProdController.setView(VIEW);
+            GetProductTable.setView(VIEW);
 
             HttpServer server = HttpServer.create();
 
@@ -48,16 +49,23 @@ public class HttpServerOneMethod {
             HttpContext context6 = server.createContext(InsertProdController.PATH); // http://localhost:8888/hello
             context6.setHandler((InsertProdController::serve));
 
+            HttpContext context7 = server.createContext(GetProductTable.PATH); // http://localhost:8888/hello
+            context7.setHandler((GetProductTable::serve));
+
             DB.connect();
-            Table.create();
+            Table.createCategory();
+            Table.cleanDatabaseCat();
+            Table.createProduct();
             Table.cleanDatabase();
 
-            Table.insert(1, "MOLOKO",29.19,5,"dairy");
-            Table.insert(2, "GRECHKA",40,100,"grain");//❤
+            Table.insertCategory(1,"dairy","molochka");
 
-            /*Integer idThree = Table.insert("MORKVA",10,20);
-            Integer idFour = Table.insert("KOVBASKA",150,1);
-            Integer idFive = Table.insert("POMIDORKA",11,220);*/
+            Table.insert(1, "MOLOKO",29.19,5,1);
+            Table.insert(2, "GRECHKA",40,100,1);//❤
+
+            Integer idThree = Table.insert("MORKVA",10,20,1);
+            Integer idFour = Table.insert("KOVBASKA",150,1,1);
+            Integer idFive = Table.insert("POMIDORKA",11,220,1);
 
             server.start();
         } catch (IOException e) {

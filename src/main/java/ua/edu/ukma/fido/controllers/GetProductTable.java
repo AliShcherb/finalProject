@@ -1,18 +1,5 @@
 package ua.edu.ukma.fido.controllers;
 
-import com.sun.net.httpserver.HttpExchange;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import ua.edu.ukma.fido.db.Product;
-import ua.edu.ukma.fido.db.Table;
-import ua.edu.ukma.fido.dto.Response;
-import ua.edu.ukma.fido.utils.AuthControlUtil;
-import ua.edu.ukma.fido.utils.KeyUtil;
-import ua.edu.ukma.fido.views.View;
-
-import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,13 +8,32 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.Base64;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-public class InsertProdController {
+import javax.crypto.spec.SecretKeySpec;
+
+import com.sun.net.httpserver.HttpContext;
+import com.sun.net.httpserver.HttpExchange;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import ua.edu.ukma.fido.dto.Response;
+import ua.edu.ukma.fido.models.User;
+import ua.edu.ukma.fido.token.TokenHolder;
+import ua.edu.ukma.fido.utils.KeyUtil;
+import ua.edu.ukma.fido.views.View;
+
+public class GetProductTable {
     private static View view;
-    public static String PATH = "/api/insert/product";
+    public static String PATH = "/get/table";
+
+
+    private static User predefinedUser = new User("Alisher", "Morgenshtern", "alisherb");
 
     public static void setView(View newView) {
         view = newView;
@@ -64,38 +70,8 @@ public class InsertProdController {
 
     public static void serve(HttpExchange httpExchange) throws IOException {
 
-        if("POST".equals(httpExchange.getRequestMethod())) {
-            Map<String, String> requestParams = getWwwFormUrlencodedBody(httpExchange);
-            String name = requestParams.get("name");
-           Double price = Double.parseDouble(requestParams.get("price"));  ;
-           int amount = Integer.parseInt(requestParams.get("amount"));
-            int category =Integer.parseInt(requestParams.get("category"));
-            Table.insert(name, price,amount,category);
-            List<Product> productList =  Table.selectAll();
-            List <String> strNames = productList.stream().map(new Function<Product, String>() {
-                @Override
-                public String apply(Product product) {
-                    return product.getProductName();
-                }
-            }).collect(Collectors.toList());
-
-            // printResultSet("All: ", p);
-            String str= String.join(",",strNames);
-            byte[] response = str.getBytes(StandardCharsets.UTF_8);
-            httpExchange.sendResponseHeaders(200, response.length);
-            httpExchange.getResponseBody()
-                    .write(response);
-            httpExchange.getResponseBody()
-                    .flush();
-
-        }
-       /* if (!validateToken(httpExchange)) {
-            AuthControlUtil.sendUnauthorized(httpExchange);
-            return;
-        }*/
-
         Response response = new Response();
-        response.setTemplate("insertProduct");
+        response.setTemplate("allProducts");
         response.setStatusCode(200);
         response.setHttpExchange(httpExchange);
         view.view(response);
@@ -104,17 +80,12 @@ public class InsertProdController {
     private static Map<String, String> getWwwFormUrlencodedBody(HttpExchange exchange) throws IOException {
         HashMap<String, String> map = new HashMap<>();
         String body = getStringFromInputStream(exchange.getRequestBody());
-
         for (String parameter : body.split("&")) {
             String[] keyValue = parameter.split("=");
-
             if (keyValue.length != 2)
                 return null;
-
             map.put(keyValue[0], keyValue[1]);
-
         }
-
         return map;
     }
 
@@ -126,5 +97,11 @@ public class InsertProdController {
             sb.append(line);
         }
         return sb.toString();
+    }
+
+    private static void redirect(HttpExchange exchange, String redirectUrl) throws IOException {
+        exchange.getResponseHeaders().set("Location", redirectUrl);
+        exchange.sendResponseHeaders(301, -1);
+        exchange.close();
     }
 }

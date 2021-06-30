@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 import javax.crypto.spec.SecretKeySpec;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 
 import io.jsonwebtoken.Claims;
@@ -60,14 +61,16 @@ public class GetAllProducts {
         public static void serve(HttpExchange httpExchange) throws IOException {
 
 
-       if (!TokenHolder.validateToken(TokenHolder.getToken())) {
+     /*  if (!TokenHolder.validateToken(TokenHolder.getToken())) {
           AuthControlUtil.sendUnauthorized(httpExchange);
            return;
-        }
+        }*/
 
             if("GET".equals(httpExchange.getRequestMethod())) {
                List<Product> productList =  Table.selectAll();
-               List <String> strNames = productList.stream().map(new Function<Product, String>() {
+                Gson gson = new Gson();
+                String prodListJSON =gson.toJson(productList);
+              /* List <String> strNames = productList.stream().map(new Function<Product, String>() {
                    @Override
                    public String apply(Product product) {
                        return product.getProductName()+" "+product.getPrice()+" "+product.getAmount()+" "+product.getProductCategory();
@@ -75,8 +78,8 @@ public class GetAllProducts {
                }).collect(Collectors.toList());
 
               // printResultSet("All: ", p);
-                String str= String.join(",",strNames);
-                byte[] response = str.getBytes(StandardCharsets.UTF_8);
+                String str= String.join(",",strNames);*/
+                byte[] response = prodListJSON.getBytes(StandardCharsets.UTF_8);
                 httpExchange.sendResponseHeaders(200, response.length);
                 httpExchange.getResponseBody()
                         .write(response);

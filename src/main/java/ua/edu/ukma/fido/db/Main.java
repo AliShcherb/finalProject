@@ -7,14 +7,20 @@ import java.util.List;
 public class Main {
     public final static String dbName="database.db";
     public final static String tableName="MAGAZINCHIK";
+    public final static String tableNameCat="Category";
 
     public static void main(String[] args) {
         DB.connect();
-        Table.create();
+        Table.createCategory();
+        Table.cleanDatabaseCat();
+        Table.createProduct();
         Table.cleanDatabase();
 
-        Table.insert(1, "MOLOKO",29.19,5, "dairy");
-        Table.insert(2, "GRECHKA",40,100,"grain");//❤
+
+        Table.insertCategory(11,"dairy","molochka");
+
+        Table.insert(1, "MOLOKO",29.19,5, 11);
+        Table.insert(2, "GRECHKA",40,100,70);//❤
 
      /*   Integer idThree = Table.insert("MORKVA",10,20);
         Integer idFour = Table.insert("KOVBASKA",150,1);
@@ -25,7 +31,7 @@ public class Main {
         System.out.println("All products: "+all);
 
         Product productByName = Table.selectByName("MOLOKO");
-        System.out.println("Find product with name \"MOLOKO\"");
+        System.out.println("find moloko"+productByName);
 
         ResultSet byAmount_more = Table.selectWhereAmountBiggerThan(15);
         printResultSet("Find where amount of products more than 15", byAmount_more);
