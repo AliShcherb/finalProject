@@ -6,277 +6,227 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>body {
-               background-color: #FEFEFE;
-               background-image: url("https://thumbs.dreamstime.com/b/delivery-box-background-cargo-package-seamless-pattern-various-open-closed-cardboard-boxes-parcel-flat-line-icons-warehouse-175148460.jpg");
-               font-family: 'Montserrat', sans-serif;
-               padding: 0px;
-               margin: 0;
-           }
+    <style>
+        body {
+            background-color: #FEFEFE;
+            background-image: url("https://thumbs.dreamstime.com/b/delivery-box-background-cargo-package-seamless-pattern-various-open-closed-cardboard-boxes-parcel-flat-line-icons-warehouse-175148460.jpg");
+            font-family: 'Montserrat', sans-serif;
+            padding: 0px;
+            margin: 0;
+        }
 
-           #containerBody {
-               height: 100%;
-           }
+        #containerBody {
+            height: 100%;
+        }
 
-           .header {
-               height: 9vh;
-               min-height: 60px;
-               max-height: 90px;
-               background-color: rgb(175, 112, 69);
-           }
+        .header {
+            background-color: rgb(175, 112, 69);
+        }
 
-           .buttons {
-               width: 100%;
-               max-width: 250px;
-               position: relative;
-               left: 50%;
-               top: 50%;
-               transform: translate(-50%, -50%);
-           }
+        .forms {
+            height: 300px;
+            background-color: rgb(175, 112, 69);
+        }
 
-           .header button {
-               border: none;
-               background: none;
-               margin: 0;
-               font-size: large;
-               color: rgb(241, 241, 241);
-           }
-           #btn1 {
+        .form {
+            display: inline-block;
+        }
 
-               margin-right: 30px;
-           }
+        .adding {
+            padding: 30px;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            border: 1px solid rgb(112, 112, 112);
+            width: 300px;
+            max-width: 300px;
+        }
 
-           .header button:hover {
-               color: white;
-               cursor: pointer;
-           }
-           #containerContent {
-               display: flex;
-               height: 91vh;
-               position: static;
-               overflow: hidden;
-           }
-           .groupPanel {
-               width: 35%;
-               min-width: 220px;
-               max-width: 400px;
-               padding: 10px;
-               overflow: auto;
-               height: auto;
-               border-right: 2px solid rgb(26, 26, 26);
-               background-color: #f8f8f875;
-           }
+        input[type=text] {
+            padding: 10px;
+            margin: 10px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
 
-           .groupPanel::-webkit-scrollbar {
-               display: none;
-           }
+        .tab {
+            overflow: hidden;
+            background-color: inherit;
+        }
 
-           .groupContent {
-               display: flex;
-               flex-direction: column;
-               width: 100%;
-               min-width: 200px;
-               height: 91vh;
-               padding: 10px;
-               padding-top: 0;
-               background-color: #f8f8f875;
-           }
-           #groupDescription {
-               margin: 0;
-               margin-top: 10px;
-               padding: 10px;
-               border-radius: 5px;
-               overflow: auto;
-               height: auto;
-               min-height: 130px;
-               background-color: rgba(255, 255, 255, 0.815);
-               backdrop-filter: blur(5px);
-               box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.5);
-           }
-           #groupDescription h3 {
-               display: inline-block;
-           }
-           .itemPanel {
-               width: 100%;
-               padding: 10px;
-               overflow: auto;
-               height: auto;
-           }
+        .tab button {
+            background-color: inherit;
+            color: rgb(241, 241, 241);
+            font-size: 16px;
+            font-weight: bold;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
 
-           .itemPanel::-webkit-scrollbar, .groupPanel::-webkit-scrollbar, #groupDescription::-webkit-scrollbar {
-               display: none;
-           }
+        .tab button:hover {
+            color: white;
+        }
 
-           .cardGroup, .cardItem {
-               height: 80px;
-               background-color: rgba(255, 255, 255, 0.664);
-               padding: 5px;
-               margin-bottom: 10px;
-               font-family: Helvetica;
-               box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.5);
-               border-radius: 5px;
-               overflow: hidden;
-               backdrop-filter: blur(5px);
-           }
-           .cardGroup:hover, .cardItem:hover {
-               cursor: pointer;
-               background-color: white;
-           }
-           .cardItem {
-               width: 40vw;
-               min-width: 120px;
-               max-width: 300px;
-               height: 50vh;
-               min-height: 80px;
-               max-height: 130px;
-               display: inline-block;
-               margin: 20px;
-           }
+        .tab button.active {
+            background-color: rgb(141, 89, 55);
+        }
 
-           .cardGroup h3, .cardItem h3 {
-               margin: 0;
-           }
-           p {
-               margin: 3px;
-           }
-           .descrButtons{
-               display: inline-block;
-           }
-           .itemButtons {
-               float: right;
-           }
-           .descrButtons button , .itemButtons button{
-               color: rgb(26, 26, 26);
-               background: none;
-               border: none;
-               font-size: 20px;
-           }.descrButtons button:hover , .itemButtons button:hover{
-               cursor: pointer;
-           }
-           .descrButtons button:active , .itemButtons button:active{
-               color: rgb(0, 0, 0);
-           }
-           .adding {
-               display: none;
-               padding: 30px;
-               background-color: #f8f8f8;
-               border-radius: 10px;
-               border: 1px solid rgb(112, 112, 112);
-               width: 300px;
-               max-width: 300px;
-               position: absolute;
-               left: 50%;
-               top: 50%;
-               transform: translate(-50%, -50%);
-           }
-           input[type=text]{
-               width: 100%;
-               padding: 12px 20px;
-               margin-bottom: 20px;
-               margin-top: 20px;
-               display: inline-block;
-               border: 1px solid #ccc;
-               box-sizing: border-box;
-           }
-           .dodaty {
-               background-color: #04AA6D;
-               color: white;
-               padding: 14px 20px;
-               margin-top: 20px;
-               border: none;
-               cursor: pointer;
-               width: 100%;
-           }
-           .dodaty:hover {
-               opacity: 0.8;
-           }
-           .closeForm{
-               color: rgb(26, 26, 26);
-               background: none;
-               border: none;
-               font-size: 20px;
-               float: right;
-           }.closeForm:hover {
-               cursor: pointer;
-           }
-           .closeForm:active {
-               color: rgb(0, 0, 0);
-           }</style>
+        form button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            opacity: 0.8;
+        }
+
+        .form {
+            display: none;
+            padding: 6px 12px;
+        }
+
+        label {
+            color: rgb(241, 241, 241);
+            font-size: 14px;
+        }
+
+        input,
+        label {
+            display: block;
+        }
+
+        .formpart {
+            display: inline-block;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        function openForm(evt, formName) {
+            var i, tabcontent, tablinks;
+
+            tabcontent = document.getElementsByClassName("form");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(formName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 </head>
 
 <body>
     <div id="containerBody">
         <div class="header">
-            <div class="buttons">
-                <button type="button" id="btn1" onclick="showGeneral()">Склад</button>
-                <button type="button" onclick="addGroupForm()">Додати групу</button>
+            <div class="tab">
+                <button class="tablinks" onclick="openForm(event, 'allItems')">Усі товари</button>
+                <button class="tablinks" onclick="openForm(event, 'groupItems')">Товари по групі</button>
+                <button class="tablinks" onclick="openForm(event, 'nameItem')">Товар по назві</button>
+                <button class="tablinks" onclick="openForm(event, 'idItem')">Товар по ідентифікатору</button>
+                <button class="tablinks" onclick="openForm(event, 'addItem')">Додати товар</button>
+                <button class="tablinks" onclick="openForm(event, 'addGroup')">Додати групу</button>
+            </div>
+            <div class="form" id="allItems">
+                <form action="/api/all" method="POST">
+                    <button type="button" id="btn1" onclick="showGeneral()">Склад</button>
+
+                </form>
+            </div>
+            <div class="form" id="groupItems">
+                <form action="" method="POST">
+                    <div class="formpart">
+                        <label for="grName"><b>Назва групи</b></label>
+                        <input type="text" placeholder="Введіть назву групи" id="grName" name="grName" required>
+                    </div>
+
+                    <button type="button">Вивести</button>
+                </form>
+            </div>
+            <div class="form" id="nameItem">
+                <form action="/api/name" method="POST">
+                    <div class="formpart">
+                        <label for="itName"><b>Назва товару</b></label>
+                        <input type="text" placeholder="Введіть назву товару" id="itName" name="itName" required>
+                    </div>
+
+                    <button type="button">Знайти</button>
+                </form>
+            </div>
+            <div class="form" id="idItem">
+                <form action="/api/goog" method="POST">
+                    <div class="formpart">
+                        <label for="itId"><b>Ідентифікатор товару</b></label>
+                        <input type="text" placeholder="Введіть ідентифікатор товару" id="itId" name="itId" required>
+                    </div>
+
+                    <button type="button">Знайти</button>
+                </form>
+            </div>
+            <div class="form" id="addItem">
+                <form action="" method="POST">
+                    <div class="formpart">
+                        <label for="itName"><b>Назва товару</b></label>
+                        <input type="text" placeholder="Введіть назву товару" id="itName" name="itName" required>
+                    </div>
+                    <div class="formpart">
+                        <label for="itDescription"><b>Опис товару</b></label>
+                        <input type="text" placeholder="Додайте короткий опис товару" id="itDescription"
+                            name="itDescription" required>
+                    </div>
+                    <div class="formpart">
+                        <label for="itDistributor"><b>Виробник</b></label>
+                        <input type="text" placeholder="Вкажіть виробника" id="itDistributor" name="itDistributor"
+                            required>
+                    </div>
+                    <div class="formpart">
+                        <label for="itGroup"><b>Група</b></label>
+                        <input type="text" placeholder="Вкажіть групу" id="itGroup" name="itGroup" required>
+                    </div>
+                    <div class="formpart">
+                        <label for="itPrice"><b>Ціна за одиницю</b></label>
+                        <input type="text" placeholder="Вкажіть ціну одиниці товару у гривнях" id="itPrice"
+                            name="itPrice" required>
+                    </div>
+                    <div class="formpart">
+                        <label for="itQuantity"><b>Кількість</b></label>
+                        <input type="text" placeholder="Введіть початкову кількість товару" id="itQuantity"
+                            name="itQuantity" required>
+                    </div>
+                    <button type="button">Вивести</button>
+                </form>
+            </div>
+            <div class="form" id="addGroup">
+                <form action="" method="POST">
+                    <div class="formpart">
+                        <label for="grName"><b>Назва групи</b></label>
+                        <input type="text" placeholder="Введіть назву групи товарів" name="grName" required>
+                    </div>
+                    <div class="formpart">
+                        <label for="grDescription"><b>Опис групи</b></label>
+                        <input type="text" placeholder="Додайте короткий опис групи товарів" name="grDescription"
+                            required>
+                    </div>
+                    <button type="button">Вивести</button>
+                </form>
             </div>
         </div>
         <div id="containerContent">
-            <div class="groupPanel" id="app" v-scroll="onScroll">
-            </div>
-            <div class="groupContent">
-                <div id="groupDescription">
-                    <h3>GroupName</h3>
-                    <div class="descrButtons">
-                        <button class="edit" onclick="addItemForm()"><i class="fa fa-plus"></i></button>
-                        <button class="edit"><i class="fa fa-edit"></i></button>
-                        <button class="delete"><i class="fa fa-trash"></i></button>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium dolorem
-                        tenetur magni ipsam eos sunt, aspernatur eum, minima atque dicta id magnam delectus, cum rem. Ea
-                        eveniet sed odit Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae voluptate
-                        nihil quisquam excepturi ratione ab vero consequatur! Sit hic aut voluptatum debitis voluptates,
-                        voluptas cum quae, aspernatur eius adipisci labore!Lorem</p>
-                </div>
-                <div class="itemPanel">
-                    <div class="cardItem">
-                        <div class="card__content">
-                            <h3>Назва товару</h3>
-                            <p>Кількість</p>
-                            <p>Опис товару</p>
-                            <p>Виробник</p>
-                            <p>Ціна:</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <table></table>
         </div>
     </div>
 
-    <div class="form adding addItem">
-        <button class="closeForm" onclick="closeItemForm()"><i class="fa fa-close"></i></button>
-        <label for="itName"><b>Назва товару</b></label>
-        <input type="text" placeholder="Введіть назву товару" id="itName" name="itName" required>
-
-        <label for="itQuantity"><b>Кількість</b></label>
-        <input type="text" placeholder="Введіть початкову кількість товару" id="itQuantity" name="itQuantity" required>
-
-        <label for="itDescription"><b>Опис товару</b></label>
-        <input type="text" placeholder="Додайте короткий опис товару" id="itDescription" name="itDescription" required>
-
-        <label for="itDistributor"><b>Виробник</b></label>
-        <input type="text" placeholder="Вкажіть виробника" id="itDistributor" name="itDistributor" required>
-
-        <label for="itPrice"><b>Ціна за одиницю</b></label>
-        <input type="text" placeholder="Вкажіть ціну одиниці товару у гривнях" id="itPrice" name="itPrice" required>
-
-        <button class="dodaty" type="submit" onclick="addItem()">Додати</button>
-    </div>
-    <div class="form adding addGroup">
-        <button class="closeForm" onclick="closeGroupForm()"><i class="fa fa-close"></i></button>
-        <label for="grName"><b>Назва групи</b></label>
-        <input type="text" placeholder="Введіть назву групи товарів" name="grName" required>
-
-        <label for="grDescription"><b>Опис групи</b></label>
-        <input type="text" placeholder="Додайте короткий опис групи товарів" name="grDescription" required>
-
-        <button class="dodaty" type="submit" onclick="addGroup()">Додати</button>
-
-    </div>
-
-    <script src="mainworkspace.js"></script>
 </body>
 
 </html>
