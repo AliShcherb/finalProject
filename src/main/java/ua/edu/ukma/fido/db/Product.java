@@ -4,11 +4,14 @@ public class Product {
     private String productName;
     private Double price;
     private Integer amount;
+    private String productCategory;
 
-    public Product(String productName, Double price, Integer amount) {
+
+    public Product(String productName, Double price, Integer amount,String productCategory) {
         this.productName = productName;
         this.price = price;
         this.amount = amount;
+        this.productCategory=productCategory;
     }
 
     public String getProductName() {
@@ -33,6 +36,14 @@ public class Product {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public String getProductCategory() {
+        return productCategory;
+    }
+
+    public void setProductCategory(String productCategory) {
+        this.productCategory = productCategory;
     }
 
     @Override

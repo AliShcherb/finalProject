@@ -12,12 +12,17 @@
     </div>
     <div>
             <label for="price">Price:</label>
-            <input type="text" id="price" name="price"/>
+            <input type="number" id="price" name="price"/>
         </div>
         <div>
                 <label for="amount">Amount:</label>
-                <input type="text" id="amount" name="amount"/>
+                <input type="number" id="amount" name="amount"/>
             </div>
+               <div>
+                            <label for="category">Category:</label>
+                            <input type="text" id="category" name="category"/>
+                        </div>
+                              <button type="submit" >Login</button>
 </form>
 </body>
 </html>

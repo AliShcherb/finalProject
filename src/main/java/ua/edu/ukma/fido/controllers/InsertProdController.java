@@ -21,10 +21,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class InsertProdController {
     private static View view;
@@ -68,8 +67,20 @@ public class InsertProdController {
         if("POST".equals(httpExchange.getRequestMethod())) {
             Map<String, String> requestParams = getWwwFormUrlencodedBody(httpExchange);
             String name = requestParams.get("name");
-            Product p =  Table.selectByName(name);
-            String str= "Name:"+p.getProductName()+ " Price:"+p.getPrice()+" Amount:"+p.getAmount();
+           Double price = Double.parseDouble(requestParams.get("price"));  ;
+           int amount = Integer.parseInt(requestParams.get("amount"));
+            String category = requestParams.get("category");
+            Table.insert(name, price,amount,category);
+            List<Product> productList =  Table.selectAll();
+            List <String> strNames = productList.stream().map(new Function<Product, String>() {
+                @Override
+                public String apply(Product product) {
+                    return product.getProductName();
+                }
+            }).collect(Collectors.toList());
+
+            // printResultSet("All: ", p);
+            String str= String.join(",",strNames);
             byte[] response = str.getBytes(StandardCharsets.UTF_8);
             httpExchange.sendResponseHeaders(200, response.length);
             httpExchange.getResponseBody()

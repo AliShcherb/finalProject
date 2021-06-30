@@ -11,7 +11,7 @@ public class Table {
     public static void create() {
         String sqlQuery = "CREATE TABLE IF NOT EXISTS " +
                 Main.tableName +
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, price NUMBER, amount NUMBER)";
+                "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, price NUMBER, amount NUMBER, category  CHAR)";
 
         try (Statement statement = DB.connection.createStatement()) {
             statement.execute(sqlQuery);
@@ -22,20 +22,21 @@ public class Table {
         }
     }
 
-    public static Integer insert(String name, double price, int amount) {
-        String sqlQuery = "INSERT INTO " + Main.tableName + " (name, price,amount) VALUES (?,?,?)";
+    public static Integer insert(String name, double price, int amount, String category) {
+        String sqlQuery = "INSERT INTO " + Main.tableName + " (name, price,amount,category) VALUES (?,?,?,?)";
 
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, name);
             preparedStatement.setDouble(2, price);
             preparedStatement.setInt(3, amount);
+            preparedStatement.setString(4, category);
 
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 Integer id = resultSet.getInt(1);
 
-                System.out.println("Inserted: id(" + id + ")  name: " + name + "  price: " + price + "  amount: " + amount + "\n");
+                System.out.println("Inserted: id(" + id + ")  name: " + name + "  price: " + price + "  amount: " + amount + "  category: " + category +"\n");
 
                 return id;
             } else {
@@ -47,18 +48,19 @@ public class Table {
         return null;
     }
 
-    public static void insert(int id, String name, double price, int amount) {
-        String sqlQuery = "INSERT INTO " + Main.tableName + " (id, name, price,amount) VALUES (?, ?, ?, ?)";
+    public static void insert(int id, String name, double price, int amount, String category) {
+        String sqlQuery = "INSERT INTO " + Main.tableName + " (id, name, price,amount,category) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, name);
             preparedStatement.setDouble(3, price);
             preparedStatement.setDouble(4, amount);
+            preparedStatement.setString(5, category);
 
             preparedStatement.executeUpdate();
 
-            System.out.println("Inserted: id(" + id + ")  name: " + name + "  price: " + price + "  amount: " + amount + "\n");
+            System.out.println("Inserted: id(" + id + ")  name: " + name + "  price: " + price + "  amount: " + amount + "  category: " + category +"\n");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -119,7 +121,8 @@ public class Table {
                 product = new Product(
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
-                        resultSet.getInt("amount")
+                        resultSet.getInt("amount"),
+                        resultSet.getString("category")
                 );
                 resultSet.close();
             }
@@ -141,7 +144,8 @@ public class Table {
                 product = new Product(
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
-                        resultSet.getInt("amount")
+                        resultSet.getInt("amount"),
+                        resultSet.getString("category")
                 );
                 resultSet.close();
             }
@@ -223,7 +227,8 @@ public class Table {
                 String name = res.getString("name");
                 Double price = res.getDouble("price");
                 Integer amount = res.getInt("amount");
-                Product product = new Product(name, price, amount);
+                String category = res.getString("category");
+                Product product = new Product(name, price, amount,category);
                 productList.add(product);
             }
         } catch (SQLException sqlException) {

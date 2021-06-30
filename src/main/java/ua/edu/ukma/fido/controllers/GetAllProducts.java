@@ -70,7 +70,7 @@ public class GetAllProducts {
                List <String> strNames = productList.stream().map(new Function<Product, String>() {
                    @Override
                    public String apply(Product product) {
-                       return product.getProductName();
+                       return product.getProductName()+" "+product.getPrice()+" "+product.getAmount()+" "+product.getProductCategory();
                    }
                }).collect(Collectors.toList());
 

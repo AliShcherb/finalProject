@@ -52,12 +52,12 @@ public class HttpServerOneMethod {
             Table.create();
             Table.cleanDatabase();
 
-            Table.insert(1, "MOLOKO",29.19,5);
-            Table.insert(2, "GRECHKA",40,100);//❤
+            Table.insert(1, "MOLOKO",29.19,5,"dairy");
+            Table.insert(2, "GRECHKA",40,100,"grain");//❤
 
-            Integer idThree = Table.insert("MORKVA",10,20);
+            /*Integer idThree = Table.insert("MORKVA",10,20);
             Integer idFour = Table.insert("KOVBASKA",150,1);
-            Integer idFive = Table.insert("POMIDORKA",11,220);
+            Integer idFive = Table.insert("POMIDORKA",11,220);*/
 
             server.start();
         } catch (IOException e) {
