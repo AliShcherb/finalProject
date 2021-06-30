@@ -89,7 +89,7 @@
             <label><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="user_password" required>
 
-            <button type="submit" href="findproduct.flth">Login</button>
+            <button type="submit" href="allProducts.flth">Login</button>
 
         </form>
     </div>
