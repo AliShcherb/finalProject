@@ -90,7 +90,7 @@ public class LoginController {
                         .write(response);
                 httpExchange.getResponseBody()
                         .flush();*/
-               redirect(httpExchange,"api/all");
+               redirect(httpExchange,"get/table");
             } else {
                 byte[] response = "Dude, you shall not pass!".getBytes(StandardCharsets.UTF_8);
                 httpExchange.sendResponseHeaders(401, response.length);
