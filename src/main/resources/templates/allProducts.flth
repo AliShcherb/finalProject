@@ -3,12 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>User</title>
+    <script>function loadTable() {
+                let  id = document.getElementById("id"); //?????
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status === 200) {
+                        var data = this.responseText;
+                        var jsonResponse = JSON.parse(data);
+                        var table = document.getElementById('info-table');
+                        table.setAttribute('class', 'products');
+                        var properties = ['productName', 'price', 'amount', 'group'];
+
+                        var tr = document.createElement('tr');
+
+                        table.appendChild(tr);
+                        var tr, row;
+
+                        for (var r = 0; r < jsonResponse.Data.length; r++) {
+                            tr = document.createElement('tr');
+                            row = jsonResponse.Data[r]; // changed this
+                            for (var i = 0; i < properties.length; i++) {
+                                var td = document.createElement('td');
+                                    console.log(properties[i]);
+                                    console.log(i);
+                                    td.appendChild(document.createTextNode(row[properties[i]]));
+
+                                tr.appendChild(td);
+                            }
+                            table.appendChild(tr);
+                        }
+                    }
+                };
+                //???????
+                let url = "/api/goog/"+id.value;
+
+                xhttp.open("GET", url, false);
+                xhttp.send();
+            }</script>
 </head>
 <body>
 <form action="/api/all" method="POST">
     <div>
-      <button type="button">Click to load!</button>
+      <button type="button" onclick="loadTable()">Click to load!</button>
     </div>
+    <table id="info-table"></table>
 </form>
 </body>
 </html>
