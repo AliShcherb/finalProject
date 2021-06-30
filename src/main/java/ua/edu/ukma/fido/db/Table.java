@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
-    public static void create() {
+    public static void createProduct() {
         String sqlQuery = "CREATE TABLE IF NOT EXISTS " +
                 Main.tableName +
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, price NUMBER, amount NUMBER, category  CHAR)";
+                "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL UNIQUE, price NUMBER, amount NUMBER, categoryID  NUMBER , FOREIGN KEY (categoryID) REFERENCES Category (id))";
 
         try (Statement statement = DB.connection.createStatement()) {
             statement.execute(sqlQuery);
@@ -22,14 +22,45 @@ public class Table {
         }
     }
 
-    public static Integer insert(String name, double price, int amount, String category) {
-        String sqlQuery = "INSERT INTO " + Main.tableName + " (name, price,amount,category) VALUES (?,?,?,?)";
+    public static void createCategory() {
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS " +
+                Main.tableNameCat +
+                "(id INTEGER PRIMARY KEY AUTOINCREMENT, nameCat CHAR , description CHAR)";
+
+        try (Statement statement = DB.connection.createStatement()) {
+            statement.execute(sqlQuery);
+
+            System.out.println("Table \"" + Main.tableNameCat + "\" was created!\n");
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+
+    public static void insertCategory(Integer id,String nameCat,  String description) {
+        String sqlQuery = "INSERT INTO " + Main.tableNameCat + " (id, nameCat, description) VALUES (?, ?,?)";
+
+        try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery)) {
+
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, nameCat);
+            preparedStatement.setString(3, description);
+
+            preparedStatement.executeUpdate();
+
+            System.out.println("Name: " + nameCat + "  description: " + description +"\n");
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+
+    public static Integer insert(String name, double price, int amount, Integer category) {
+        String sqlQuery = "INSERT INTO " + Main.tableName + " (name, price,amount,categoryID) VALUES (?,?,?,?)";
 
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, name);
             preparedStatement.setDouble(2, price);
             preparedStatement.setInt(3, amount);
-            preparedStatement.setString(4, category);
+            preparedStatement.setInt(4, category);
 
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -48,19 +79,19 @@ public class Table {
         return null;
     }
 
-    public static void insert(int id, String name, double price, int amount, String category) {
-        String sqlQuery = "INSERT INTO " + Main.tableName + " (id, name, price,amount,category) VALUES (?, ?, ?, ?, ?)";
+    public static void insert(int id, String name, double price, int amount, Integer categoryID) {
+        String sqlQuery = "INSERT INTO " + Main.tableName + " (id, name, price,amount,categoryID) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, name);
             preparedStatement.setDouble(3, price);
             preparedStatement.setDouble(4, amount);
-            preparedStatement.setString(5, category);
+            preparedStatement.setInt(5, categoryID);
 
             preparedStatement.executeUpdate();
 
-            System.out.println("Inserted: id(" + id + ")  name: " + name + "  price: " + price + "  amount: " + amount + "  category: " + category +"\n");
+            System.out.println("Inserted: id(" + id + ")  name: " + name + "  price: " + price + "  amount: " + amount + "  category: " + categoryID +"\n");
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -112,7 +143,7 @@ public class Table {
 
     public static Product selectByName(String name) {
         Product product = null;
-        String sqlQuery = "SELECT * FROM " + Main.tableName + " WHERE name = ?";
+        String sqlQuery = "SELECT * FROM " + Main.tableName +" INNER JOIN "+Main.tableNameCat+" ON " +Main.tableName+".categoryID = "+Main.tableNameCat+".id"+" WHERE "+Main.tableName+".name = ?";
 
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery)) {
             preparedStatement.setString(1, name);
@@ -122,7 +153,7 @@ public class Table {
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("amount"),
-                        resultSet.getString("category")
+                        resultSet.getInt("nameCat")
                 );
                 resultSet.close();
             }
@@ -145,7 +176,7 @@ public class Table {
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("amount"),
-                        resultSet.getString("category")
+                        resultSet.getInt("category")
                 );
                 resultSet.close();
             }
@@ -219,7 +250,7 @@ public class Table {
 
     public static List<Product> selectAll() {
         List<Product> productList = new ArrayList<>();
-        String sqlQuery = "SELECT * FROM " + Main.tableName;
+        String sqlQuery = "SELECT name, price, amount, nameCat  FROM " + Main.tableName +" INNER JOIN "+Main.tableNameCat+" ON " +Main.tableName+".categoryID = "+Main.tableNameCat+".id";
         try (Statement statement = DB.connection.createStatement();) {
             ResultSet res = statement.executeQuery(sqlQuery);
             while (res.next()) {
@@ -227,8 +258,9 @@ public class Table {
                 String name = res.getString("name");
                 Double price = res.getDouble("price");
                 Integer amount = res.getInt("amount");
-                String category = res.getString("category");
-                Product product = new Product(name, price, amount,category);
+               //Integer category = res.getInt("categoryID");
+                String nameCat = res.getString("nameCat");
+                Product product = new Product(name, price, amount,nameCat);
                 productList.add(product);
             }
         } catch (SQLException sqlException) {
@@ -245,7 +277,14 @@ public class Table {
             System.out.println(e.getMessage());
         }
     }
-
+    public static void cleanDatabaseCat() {
+        String sqlQuery = "DELETE FROM " + Main.tableNameCat;
+        try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery);) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public static void deleteByName(String name) {
         String sqlQuery = "DELETE FROM " + Main.tableName + " WHERE name = ?";
 
@@ -280,10 +319,13 @@ public class Table {
 
     public static void dropTable() {
         String sqlQuery = "DROP TABLE " + Main.tableName;
-
+        String sqlQuery2= "DROP TABLE " + Main.tableNameCat;
         try (Statement statement = DB.connection.createStatement();) {
             statement.execute(sqlQuery);
+            statement.execute(sqlQuery2);
             System.out.println("Table \"" + Main.tableName + "\" was truncated");
+            System.out.println();
+            System.out.println("Table \"" + Main.tableNameCat+ "\" was truncated");
             System.out.println();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
