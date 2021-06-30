@@ -5,9 +5,10 @@
     <title>User</title>
 </head>
 <body>
-<form action="/api/all" method="POST">
+<form action="/api/name" method="POST">
     <div>
-      <button type="button">Click to load!</button>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"/>
     </div>
 </form>
 </body>

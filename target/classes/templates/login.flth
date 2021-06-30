@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>var modal = document.getElementById('id01');
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
+            }</script>
+    <style>body {
+               background-color: rgb(238, 197, 147);
+               background-image: url("https://thumbs.dreamstime.com/b/%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD-%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%B0-%D0%B1%D0%B5%D0%B7%D1%88%D0%BE%D0%B2%D0%BD%D0%B0%D1%8F-%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B8-%D0%B3%D1%80%D1%83%D0%B7%D0%BE%D0%B2-%D1%84%D0%BE%D0%BD%D0%B0-%D0%BA%D0%BE%D1%80%D0%BE%D0%B1%D0%BA%D0%B8-%D1%80%D0%B0%D0%B7%D0%BB%D0%B8%D1%87%D0%BD%D1%8B%D0%B5-175148460.jpg");
+               font-family: 'Montserrat', sans-serif;
+           }
+
+           input[type=text],
+           input[type=password] {
+               width: 100%;
+               padding: 12px 20px;
+               margin-bottom: 20px;
+               margin-top: 20px;
+               display: inline-block;
+               border: 1px solid #ccc;
+               box-sizing: border-box;
+           }
+
+           /* Set a style for all buttons */
+           button {
+               background-color: #04AA6D;
+               color: white;
+               padding: 14px 20px;
+               margin-top: 20px;
+               border: none;
+               cursor: pointer;
+               width: 100%;
+           }
+
+           button:hover {
+               opacity: 0.8;
+           }
+
+           .imgcontainer {
+               text-align: center;
+               margin: 24px 0 12px 0;
+           }
+
+           .logo {
+               width: 100px;
+           }
+
+           .container {
+               padding: 30px;
+               background-color: #f8f8f8;
+               border-radius: 10px;
+               border: 1px solid rgb(112, 112, 112);
+               width: 300px;
+               max-width: 300px;
+               position: fixed;
+               left: 50%;
+               top: 50%;
+               transform: translate(-50%, -50%);
+           }
+           figcaption {
+               font-family: Brush Script MT, Brush Script Std, cursive;
+               font-size: 25px;
+               font-weight: bolder;
+               color:rgb(165, 91, 42);
+           }</style>
+</head>
+
+<body>
+    <div class="container">
+       <form action="/login" method="POST">
+            <div class="imgcontainer">
+                <figure>
+                <img src="https://www.netclipart.com/pp/m/92-928145_box-clipart-transparent-background.png" alt="Logo" class="logo">
+                <figcaption>qSklad</figcaption></figure>
+            </div>
+            <label><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="user_name" required>
+
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="user_password" required>
+
+            <button type="submit" href="findproduct.flth">Login</button>
+
+        </form>
+    </div>
+</body>
+
+</html>

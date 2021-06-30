@@ -5,9 +5,10 @@
     <title>User</title>
 </head>
 <body>
-<form action="/api/all" method="POST">
+<form action="/api/goog" method="POST">
     <div>
-      <button type="button">Click to load!</button>
+        <label for="id">Id:</label>
+        <input type="text" id="id" name="id"/>
     </div>
 </form>
 </body>
