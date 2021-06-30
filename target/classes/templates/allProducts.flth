@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<form action="/api/all" method="POST">
+    <div>
+      <button type="button">Click to load!</button>
+    </div>
+</form>
+</body>
+</html>
