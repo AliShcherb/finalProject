@@ -67,14 +67,14 @@
 
 <body>
     <div class="container">
-       <form action="/login" method="GET">
+       <form action="/relogin" method="POST">
             <div class="imgcontainer">
                 <figure>
                 <img src="https://www.netclipart.com/pp/m/92-928145_box-clipart-transparent-background.png" alt="Logo" class="logo">
                 <figcaption>qSklad</figcaption></figure>
             </div>
-            <p>Incorrect data</p>
-            <button>Try again</button>
+            <p>Введено неправильні дані</p>
+            <button type="submit">Спробувати ще раз</button>
 
         </form>
     </div>

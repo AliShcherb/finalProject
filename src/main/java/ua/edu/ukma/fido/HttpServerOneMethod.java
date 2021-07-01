@@ -23,7 +23,7 @@ public class HttpServerOneMethod {
             LoginController.setView(VIEW);
             ApiGoodId.setView(VIEW);
            GetAllProducts.setView(VIEW);
-            ApiGoodName.setView(VIEW);
+            DeleteByName.setView(VIEW);
             InsertProdController.setView(VIEW);
             GetProductTable.setView(VIEW);
             FailLoginController.setView(VIEW);
@@ -44,8 +44,8 @@ public class HttpServerOneMethod {
             HttpContext context4 = server.createContext(GetAllProducts.PATH); // http://localhost:8888/hello
             context4.setHandler(GetAllProducts::serve);
 
-            HttpContext context5 = server.createContext(ApiGoodName.PATH); // http://localhost:8888/hello
-            context5.setHandler(ApiGoodName::serve);
+            HttpContext context5 = server.createContext(DeleteByName.PATH); // http://localhost:8888/hello
+            context5.setHandler(DeleteByName::serve);
 
             HttpContext context6 = server.createContext(InsertProdController.PATH); // http://localhost:8888/hello
             context6.setHandler((InsertProdController::serve));
