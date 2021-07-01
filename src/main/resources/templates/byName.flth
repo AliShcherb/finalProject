@@ -1,131 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>User</title>
     <style>
-    input{
-                   width: 100%;
-                   padding: 12px 20px;
-                   margin-bottom: 20px;
-                   margin-top: 20px;
-                   display: inline-block;
-                   border: 1px solid #ccc;
-                   box-sizing: border-box;
-               }
+        input {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
 
-               button {
-                   background-color: #04AA6D;
-                   color: white;
-                   padding: 14px 20px;
-                   margin-top: 20px;
-                   border: none;
-                   cursor: pointer;
-                   width: 100%;
-               }
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
 
-               button:hover {
-                   opacity: 0.8;
-               }body {
-                              background-color: #FEFEFE;
-                              background-image: url("https://thumbs.dreamstime.com/b/delivery-box-background-cargo-package-seamless-pattern-various-open-closed-cardboard-boxes-parcel-flat-line-icons-warehouse-175148460.jpg");
-                              font-family: 'Montserrat', sans-serif;
-                              padding: 0px;
-                              margin: 0;
-                          }
-               .imgcontainer, .navcontainer {
-                   text-align: center;
-                   display: inline-block;
-                   margin: 0;
-                   margin-top: 10px;
-                   padding: 0;
-               }
-               .navcontainer {
-                   margin-left: 20px;
-               }
-               .logo {
-                   width: 70px;
-                   float: left;
-               }
-               figure {
-                   display: flex;
-                   align-items: center;
-                   margin: 0;
-               }
+        button:hover {
+            opacity: 0.8;
+        }
 
-               figcaption {
-                   font-family: Brush Script MT, Brush Script Std, cursive;
-                   font-size: 25px;
-                   font-weight: bolder;
-                   color: rgb(243, 243, 243);
-                   margin-left: 10px;
-               }
+        body {
+            background-color: #FEFEFE;
+            background-image: url("https://thumbs.dreamstime.com/b/delivery-box-background-cargo-package-seamless-pattern-various-open-closed-cardboard-boxes-parcel-flat-line-icons-warehouse-175148460.jpg");
+            font-family: 'Montserrat', sans-serif;
+            padding: 0px;
+            margin: 0;
+        }
 
-               header {
-                   background-color: rgb(175, 112, 69);
-                   padding: 0px 20px;
-               }
+        .imgcontainer,
+        .navcontainer {
+            text-align: center;
+            display: inline-block;
+            margin: 0;
+            margin-top: 10px;
+            padding: 0;
+        }
 
-               nav {
-                   display: inline-block;
-                   margin-top: 0px;
-               }
+        .navcontainer {
+            margin-left: 20px;
+        }
 
-               ul {
-                   list-style-type: none;width: 100%;
-           position: relative;
-           left: 50%;
-           top: 50%;
-           transform: translate(-50%, -50%);
-               }
+        .logoplace {
+            font-family: Brush Script MT, Brush Script Std, cursive;
+            font-size: 25px;
+            font-weight: bolder;
+            color: rgb(243, 243, 243);
+            margin-left: 10px;
+        }
 
-               li {
-                   display: inline-block;
-                   margin-left: 20px;
-               }
+        header {
+            background-color: rgb(175, 112, 69);
+            padding: 0px 20px;
+        }
 
-               a {
-                   color: rgb(243, 243, 243);
-                   text-decoration: none;
-                   font-weight: bold;
-               }
-               .container {
-                               padding: 30px;
-                               background-color: #f8f8f8;
-                               border-radius: 10px;
-                               border: 1px solid rgb(112, 112, 112);
-                               width: 300px;
-                               max-width: 300px;
-                               position: fixed;
-                               left: 50%;
-                               top: 50%;
-                               transform: translate(-50%, -50%);
-                           }</style>
+        a {
+            color: rgb(243, 243, 243);
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        a:hover {
+            color: rgb(216, 216, 216);
+        }
+
+        .container {
+            padding: 30px;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            border: 1px solid rgb(112, 112, 112);
+            width: 300px;
+            max-width: 300px;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
-<body>
-<header>
-        <div class="imgcontainer">
-            <figure>
-                <img src="https://www.netclipart.com/pp/m/92-928145_box-clipart-transparent-background.png" alt="Logo" class="logo">
-                <figcaption>qSklad</figcaption>
-            </figure>
-        </div>
-        <div class="navcontainer"><nav>
-            <ul>
-                <li><a href="/get/table">Product list</a></li>
-                <li><a href="/api/insert/product">Add product</a></li>
-                <li><a href="/delete/name">Delete product</a></li>
-            </ul>
-        </nav></div>
 
+<body>
+    <header>
+        <div class="imgcontainer">
+            <p class="logoplace">qSklad</p>
+        </div>
+        <div class="navcontainer">
+            <a href="/get/table">Product list</a>
+            <a href="/api/insert/product">Add product</a>
+            <a href="/delete/name">Delete product</a>
+        </div>
     </header>
 
     <div class="container">
-<form action="/delete/name" method="POST">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name"/>
+        <form action="/delete/name" method="POST">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" />
+            </div>
+        </form>
     </div>
-</form></div>
 </body>
+
 </html>

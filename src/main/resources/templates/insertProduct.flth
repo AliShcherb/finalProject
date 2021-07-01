@@ -23,7 +23,6 @@
             box-sizing: border-box;
         }
 
-        /* Set a style for all buttons */
         button {
             background-color: #04AA6D;
             color: white;
@@ -51,18 +50,7 @@
             margin-left: 20px;
         }
 
-        .logo {
-            width: 70px;
-            float: left;
-        }
-
-        figure {
-            display: flex;
-            align-items: center;
-            margin: 0;
-        }
-
-        figcaption {
+        .logoplace {
             font-family: Brush Script MT, Brush Script Std, cursive;
             font-size: 25px;
             font-weight: bolder;
@@ -75,29 +63,16 @@
             padding: 0px 20px;
         }
 
-        nav {
-            display: inline-block;
-            margin-top: 0px;
-        }
-
-        ul {
-            list-style-type: none;
-            width: 100%;
-            position: relative;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        li {
-            display: inline-block;
-            margin-left: 20px;
-        }
 
         a {
             color: rgb(243, 243, 243);
             text-decoration: none;
             font-weight: bold;
+            margin-left: 20px;
+        }
+
+        a:hover {
+            color: rgb(216, 216, 216);
         }
 
         .container {
@@ -119,20 +94,12 @@
 
     <header>
         <div class="imgcontainer">
-            <figure>
-                <img src="https://www.netclipart.com/pp/m/92-928145_box-clipart-transparent-background.png" alt="Logo"
-                    class="logo">
-                <figcaption>qSklad</figcaption>
-            </figure>
+            <p class="logoplace">qSklad</p>
         </div>
         <div class="navcontainer">
-            <nav>
-                <ul>
-                    <li><a href="/get/table">Product list</a></li>
-                    <li><a href="/api/insert/product">Add product</a></li>
-                    <li><a href="/delete/name">Delete product</a></li>
-                </ul>
-            </nav>
+            <a href="/get/table">Product list</a>
+            <a href="/api/insert/product">Add product</a>
+            <a href="/delete/name">Delete product</a>
         </div>
 
     </header>
