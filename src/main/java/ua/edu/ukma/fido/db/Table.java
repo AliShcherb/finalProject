@@ -250,7 +250,7 @@ public class Table {
 
     public static List<Product> selectAll() {
         List<Product> productList = new ArrayList<>();
-        String sqlQuery = "SELECT name, price, amount, nameCat  FROM " + Main.tableName +" INNER JOIN "+Main.tableNameCat+" ON " +Main.tableName+".categoryID = "+Main.tableNameCat+".id";
+        String sqlQuery = "SELECT name, price, amount, nameCat  FROM " + Main.tableName +" INNER JOIN "+Main.tableNameCat+" ON " +Main.tableName+".category = "+Main.tableNameCat+".id";
         try (Statement statement = DB.connection.createStatement();) {
             ResultSet res = statement.executeQuery(sqlQuery);
             while (res.next()) {
