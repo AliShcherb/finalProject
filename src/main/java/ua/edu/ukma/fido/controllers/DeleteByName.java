@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import ua.edu.ukma.fido.db.Product;
 import ua.edu.ukma.fido.db.Table;
 import ua.edu.ukma.fido.dto.Response;
+import ua.edu.ukma.fido.token.TokenHolder;
 import ua.edu.ukma.fido.utils.AuthControlUtil;
 import ua.edu.ukma.fido.utils.KeyUtil;
 import ua.edu.ukma.fido.views.View;
@@ -64,6 +65,10 @@ public class DeleteByName {
     }
 
     public static void serve(HttpExchange httpExchange) throws IOException {
+        if (!TokenHolder.validateToken(TokenHolder.getToken())) {
+            AuthControlUtil.sendUnauthorized(httpExchange);
+            return;
+        }
 
         if("POST".equals(httpExchange.getRequestMethod())) {
             Map<String, String> requestParams = getWwwFormUrlencodedBody(httpExchange);
@@ -71,6 +76,7 @@ public class DeleteByName {
             Table.deleteByName(name);
 
             redirect(httpExchange,"/get/table");
+            return;
         }
 
         Response response = new Response();

@@ -61,10 +61,10 @@ public class GetAllProducts {
         public static void serve(HttpExchange httpExchange) throws IOException {
 
 
-     /*  if (!TokenHolder.validateToken(TokenHolder.getToken())) {
+       if (!TokenHolder.validateToken(TokenHolder.getToken())) {
           AuthControlUtil.sendUnauthorized(httpExchange);
            return;
-        }*/
+        }
 
             if("GET".equals(httpExchange.getRequestMethod())) {
                List<Product> productList =  Table.selectAll();

@@ -8,6 +8,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import ua.edu.ukma.fido.db.Product;
 import ua.edu.ukma.fido.db.Table;
 import ua.edu.ukma.fido.dto.Response;
+import ua.edu.ukma.fido.token.TokenHolder;
 import ua.edu.ukma.fido.utils.AuthControlUtil;
 import ua.edu.ukma.fido.utils.KeyUtil;
 import ua.edu.ukma.fido.views.View;
@@ -64,22 +65,28 @@ public class InsertProdController {
 
     public static void serve(HttpExchange httpExchange) throws IOException {
 
+        if (!TokenHolder.validateToken(TokenHolder.getToken())) {
+            AuthControlUtil.sendUnauthorized(httpExchange);
+            return;
+        }
+
         if("POST".equals(httpExchange.getRequestMethod())) {
-//            Map<String, String> requestParams = getWwwFormUrlencodedBody(httpExchange);
-//            String name = requestParams.get("name");
-//           Double price = Double.parseDouble(requestParams.get("price"));  ;
-//           int amount = Integer.parseInt(requestParams.get("amount"));
-//            int category =Integer.parseInt(requestParams.get("category"));
-//            Table.insert(name, price,amount,category);
-//            List<Product> productList =  Table.selectAll();
-//            List <String> strNames = productList.stream().map(new Function<Product, String>() {
-//                @Override
-//                public String apply(Product product) {
-//                    return product.getProductName();
-//                }
-//            }).collect(Collectors.toList());
+     Map<String, String> requestParams = getWwwFormUrlencodedBody(httpExchange);
+         String name = requestParams.get("name");
+        Double price = Double.parseDouble(requestParams.get("price"));  ;
+       int amount = Integer.parseInt(requestParams.get("amount"));
+          int category =Integer.parseInt(requestParams.get("category"));
+          Table.insert(name, price,amount,category);
+          List<Product> productList =  Table.selectAll();
+           List <String> strNames = productList.stream().map(new Function<Product, String>() {
+              @Override
+           public String apply(Product product) {
+                  return product.getProductName();
+             }
+          }).collect(Collectors.toList());
 
             redirect(httpExchange,"/get/table");
+            return;
             // printResultSet("All: ", p);
 //            String str= String.join(",",strNames);
 //            byte[] response = str.getBytes(StandardCharsets.UTF_8);
