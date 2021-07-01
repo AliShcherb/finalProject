@@ -65,28 +65,29 @@ public class InsertProdController {
     public static void serve(HttpExchange httpExchange) throws IOException {
 
         if("POST".equals(httpExchange.getRequestMethod())) {
-            Map<String, String> requestParams = getWwwFormUrlencodedBody(httpExchange);
-            String name = requestParams.get("name");
-           Double price = Double.parseDouble(requestParams.get("price"));  ;
-           int amount = Integer.parseInt(requestParams.get("amount"));
-            int category =Integer.parseInt(requestParams.get("category"));
-            Table.insert(name, price,amount,category);
-            List<Product> productList =  Table.selectAll();
-            List <String> strNames = productList.stream().map(new Function<Product, String>() {
-                @Override
-                public String apply(Product product) {
-                    return product.getProductName();
-                }
-            }).collect(Collectors.toList());
+//            Map<String, String> requestParams = getWwwFormUrlencodedBody(httpExchange);
+//            String name = requestParams.get("name");
+//           Double price = Double.parseDouble(requestParams.get("price"));  ;
+//           int amount = Integer.parseInt(requestParams.get("amount"));
+//            int category =Integer.parseInt(requestParams.get("category"));
+//            Table.insert(name, price,amount,category);
+//            List<Product> productList =  Table.selectAll();
+//            List <String> strNames = productList.stream().map(new Function<Product, String>() {
+//                @Override
+//                public String apply(Product product) {
+//                    return product.getProductName();
+//                }
+//            }).collect(Collectors.toList());
 
+            redirect(httpExchange,"/get/table");
             // printResultSet("All: ", p);
-            String str= String.join(",",strNames);
-            byte[] response = str.getBytes(StandardCharsets.UTF_8);
-            httpExchange.sendResponseHeaders(200, response.length);
-            httpExchange.getResponseBody()
-                    .write(response);
-            httpExchange.getResponseBody()
-                    .flush();
+//            String str= String.join(",",strNames);
+//            byte[] response = str.getBytes(StandardCharsets.UTF_8);
+//            httpExchange.sendResponseHeaders(200, response.length);
+//            httpExchange.getResponseBody()
+//                    .write(response);
+//            httpExchange.getResponseBody()
+//                    .flush();
 
         }
        /* if (!validateToken(httpExchange)) {
@@ -126,5 +127,10 @@ public class InsertProdController {
             sb.append(line);
         }
         return sb.toString();
+    }
+    private static void redirect(HttpExchange exchange, String redirectUrl) throws IOException {
+        exchange.getResponseHeaders().set("Location", redirectUrl);
+        exchange.sendResponseHeaders(301, -1);
+        exchange.close();
     }
 }
