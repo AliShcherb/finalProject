@@ -52,6 +52,9 @@ public class HttpServerOneMethod {
             HttpContext context7 = server.createContext(GetProductTable.PATH); // http://localhost:8888/hello
             context7.setHandler((GetProductTable::serve));
 
+            HttpContext context8 = server.createContext(FailLoginController.PATH); // http://localhost:8888/hello
+            context8.setHandler((FailLoginController::serve));
+
             DB.connect();
             Table.createCategory();
             Table.cleanDatabaseCat();

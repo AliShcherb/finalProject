@@ -61,25 +61,44 @@ function loadTable() {
             }
         }
 </script>
-<style>th {
-           height: 70px;
-           font-size: 20px;
-           background: #478ad0;
-       }
-       table, th, td {
-           border: 1px solid black;
+<style>body {
+                   background-color: #FEFEFE;
+                   background-image: url("https://thumbs.dreamstime.com/b/delivery-box-background-cargo-package-seamless-pattern-various-open-closed-cardboard-boxes-parcel-flat-line-icons-warehouse-175148460.jpg");
+                   font-family: 'Montserrat', sans-serif;
+                   padding: 20px;
+                   margin: 0;
+               }
 
-       }
-       table {
-           width: 90%;
-           height: 70%;
-           margin-left: auto;
-           margin-right: auto;
-       }
+               th {
+                   height: 70px;
+                   font-size: 20px;
+                   background-color: rgb(175, 112, 69);
+               }
 
-       table{
-           margin-top: 30px;
-       }</style>
+               td {
+
+                   background-color: rgb(175, 112, 69);
+               }
+
+               table,
+               th,
+               td {
+                   border: 1px solid black;
+
+               }
+
+               table {
+                   width: 90%;
+                   height: 70%;
+                   margin-left: auto;
+                   margin-right: auto;
+                   background-color: rgb(247, 247, 247);
+                   margin-top: 30px;
+               }
+
+               tr:first-child {
+                   background-color: rgb(175, 112, 69);
+               }</style>
 </head>
 <body onload="loadTable()">
     <div>

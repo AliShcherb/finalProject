@@ -92,12 +92,13 @@ public class LoginController {
                         .flush();*/
                redirect(httpExchange,"get/table");
             } else {
-                byte[] response = "Dude, you shall not pass!".getBytes(StandardCharsets.UTF_8);
-                httpExchange.sendResponseHeaders(401, response.length);
-                httpExchange.getResponseBody()
-                        .write(response);
-                httpExchange.getResponseBody()
-                        .flush();
+//                byte[] response = "Dude, you shall not pass!".getBytes(StandardCharsets.UTF_8);
+//                httpExchange.sendResponseHeaders(401, response.length);
+//                httpExchange.getResponseBody()
+//                        .write(response);
+//                httpExchange.getResponseBody()
+//                        .flush();
+                redirect(httpExchange,"relogin");
             }
             return;
 
