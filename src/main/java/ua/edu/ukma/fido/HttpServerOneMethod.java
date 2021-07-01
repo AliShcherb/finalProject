@@ -26,6 +26,7 @@ public class HttpServerOneMethod {
             ApiGoodName.setView(VIEW);
             InsertProdController.setView(VIEW);
             GetProductTable.setView(VIEW);
+            FailLoginController.setView(VIEW);
 
             HttpServer server = HttpServer.create();
 

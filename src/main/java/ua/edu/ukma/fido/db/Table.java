@@ -54,7 +54,7 @@ public class Table {
     }
 
     public static Integer insert(String name, double price, int amount, Integer category) {
-        String sqlQuery = "INSERT INTO " + Main.tableName + " (name, price,amount,categoryID) VALUES (?,?,?,?)";
+        String sqlQuery = "INSERT INTO " + Main.tableName + " (name, price,amount,category) VALUES (?,?,?,?)";
 
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, name);
@@ -80,7 +80,7 @@ public class Table {
     }
 
     public static void insert(int id, String name, double price, int amount, Integer categoryID) {
-        String sqlQuery = "INSERT INTO " + Main.tableName + " (id, name, price,amount,categoryID) VALUES (?, ?, ?, ?, ?)";
+        String sqlQuery = "INSERT INTO " + Main.tableName + " (id, name, price,amount,category) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = DB.connection.prepareStatement(sqlQuery)) {
             preparedStatement.setInt(1, id);
