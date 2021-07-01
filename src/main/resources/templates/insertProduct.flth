@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>User</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
             background-color: #FEFEFE;
@@ -38,7 +39,7 @@
         }
 
         .imgcontainer,
-        .navcontainer {
+        .navcontainer, .logoutcontainer  {
             text-align: center;
             display: inline-block;
             margin: 0;
@@ -102,6 +103,9 @@
             <a href="/delete/name">Delete product</a>
         </div>
 
+        <div class="logoutcontainer">
+            <a href="/login"><i class="fa fa-sign-out"></i> Log out</a>
+        </div>
     </header>
 
     <div class="container">
